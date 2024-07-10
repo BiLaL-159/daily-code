@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class Questions {
     public static void main(String[] args) {
@@ -58,6 +60,38 @@ public class Questions {
         list=insert(list,element);
         list.add(currelement);
         return list;
+    }
+    public int characterReplacement(String s, int k) {
+        HashMap<Character, Integer> map= new HashMap<>();
+
+        int i=0;
+        int j=0;
+        int max=0;
+        int ans=0;
+        while(j<s.length()){
+            map.put(s.charAt(j), map.getOrDefault(s.charAt(j),0)+1);
+            if(map.get(s.charAt(j))>max){
+                max=map.get(s.charAt(j));
+            }
+            if(j-i+1-max<=k){
+                if(j-i+1>ans){
+                    ans=j-i+1;
+                }
+                j++;
+            }
+            else if(j-i+1-max>k){
+                while(j-i+1-max>k){
+                    map.put(s.charAt(i),map.get(s.charAt(i))-1);
+                    if(map.get(s.charAt(i))==0){
+                        map.remove(s.charAt(i));
+                    }
+                    i++;
+                }
+               j++;
+            }
+
+        }
+        return ans;
     }
 
 
