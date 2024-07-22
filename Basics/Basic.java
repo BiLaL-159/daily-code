@@ -9,13 +9,14 @@ public class Basic {
         ArrayList<Integer> list= new ArrayList<>();
         Stack<Integer> stack= new Stack<>();
         stack.push(5);
-        stack.push(1);
-        stack.push(0);
+        stack.push(4);
+        stack.push(3);
         stack.push(2);
-        stack.push(9);
-        sortStack(stack);
+        stack.push(1);
+
+        reverseAStack(stack);
         while(!stack.isEmpty()){
-            stack.pop();
+            System.out.println(stack.pop());
         }
 
     }
@@ -52,7 +53,7 @@ public class Basic {
             return stack;
         }
         int popped= stack.pop();
-        System.out.println(popped);
+
         return insertStack(sortStack(stack), popped);
     }
 
@@ -67,4 +68,34 @@ public class Basic {
         return stack;
     }
 
+    public static Stack<Integer> deleteMiddle(Stack<Integer> stack, int k){
+        if(k==1){
+            stack.pop();
+            return stack;
+        }
+        int popped= stack.pop();
+        deleteMiddle(stack,k-1);
+        stack.push(popped);
+        return stack;
+    }
+
+    public static Stack<Integer> reverseAStack(Stack<Integer> stack){
+        if(stack.size()==1){
+            return stack;
+        }
+        int popped= stack.pop();
+        reverseAStack(stack);
+        return insertCorrectly(stack, popped);
+    }
+
+    public static Stack<Integer> insertCorrectly(Stack<Integer> stack, int element ){
+        if(stack.isEmpty()){
+            stack.push(element);
+            return stack;
+        }
+        int popped= stack.pop();
+        insertCorrectly(stack, element);
+        stack.push(popped);
+        return stack;
+    }
 }
