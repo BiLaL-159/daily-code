@@ -1,16 +1,11 @@
 package Basics;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
 
 public class Basic {
     public static void main(String[] args) {
-       String up="abc";
-       String p="";
-       char ch=up.charAt(0);
-       permutationWithSpace(up.substring(1), p+ch);
+
 
 
     }
@@ -168,6 +163,76 @@ public class Basic {
         permutationWithSpace(up.substring(1), p+ch);
     }
 
+    public static void permutationWithCaseChange(String up, String p){
+        if(up.length()==0){
+            System.out.println(p);
+            return;
+        }
+
+        String str=up.substring(0,1);
 
 
+
+        permutationWithCaseChange(up.substring(1), p+str);
+        permutationWithCaseChange(up.substring(1),  p+str.toUpperCase());
+
+    }
+
+    public static List<String> letterCasePermutation(String s){
+        return helper(s, "");
+    }
+
+    public static List<String> helper(String up, String p){
+        if(up.length()==0){
+            ArrayList<String> list= new ArrayList<>();
+            list.add(p);
+            return list;
+        }
+
+        ArrayList<String> ans= new ArrayList<>();
+
+        char ch= up.charAt(0);
+
+        if(ch >='0' && ch<='9'){
+          ans.addAll(helper(up.substring(1),p+ch));
+        }
+        else{
+           ans.addAll(helper(up.substring(1), p+Character.toUpperCase(ch))) ;
+           ans.addAll(helper(up.substring(1), p+Character.toLowerCase(ch))) ;
+        }
+        return ans;
+    }
+
+    public String[] sortPeople(String[] names, int[] heights) {
+        HashMap<Integer, Integer> map= new HashMap<>();
+        for(int i=0; i< heights.length; i++){
+            map.put(heights[i],i);
+        }
+
+        Arrays.sort(heights);
+        String[] ans= new String[names.length];
+        for(int j=heights.length-1; j>=0; j--){
+           ans[j]=names[map.get(heights[j])];
+        }
+        return ans;
+    }
+
+    public List<String> generateParenthesis(int n) {
+        LinkedList<String> list = new LinkedList<>();
+        solve(list, n, n, "");
+        return list;
+    }
+
+    public void solve(LinkedList<String> list, int open , int closed, String p){
+        if(open==0 && closed==0){
+            list.add(p);
+            return;
+        }
+        if(open!=0){
+            solve(list,open-1, closed, p+"(");
+        }
+        if(closed>open){
+            solve(list, open, closed-1, p+")");
+        }
+    }
 }
