@@ -5,7 +5,8 @@ import java.util.*;
 
 public class Basic {
     public static void main(String[] args) {
-
+        String up="abc";
+        System.out.println(permutationsWORepList("", up));
 
 
     }
@@ -235,4 +236,43 @@ public class Basic {
             solve(list, open, closed-1, p+")");
         }
     }
+
+    public static void permutations(String p, String up){
+        if(p.length()==up.length()){
+            System.out.println(p);
+            return;
+        }
+
+        for(int i=0; i<up.length();i++){
+            char ch=up.charAt(i);
+            permutations(p+ch, up);
+        }
+    }
+
+    public static void permutationsWORep(String p, String up){
+        if(up.length()==0){
+            System.out.println(p);
+            return;
+        }
+
+        for(int i=0; i<up.length();i++){
+            char ch=up.charAt(i);
+            permutationsWORep(p+ch,up.substring(0,i)+up.substring(i+1));
+        }
+    }
+
+    public static ArrayList<String> permutationsWORepList(String p, String up){
+        if(up.length()==0){
+            ArrayList<String> locallist= new ArrayList<>();
+            locallist.add(p);
+            return locallist;
+        }
+        ArrayList<String> ans= new ArrayList<>();
+        for(int i=0; i<up.length();i++){
+            char ch=up.charAt(i);
+            ans.addAll(permutationsWORepList(p+ch,up.substring(0,i)+up.substring(i+1)));
+        }
+        return ans;
+     }
+
 }
