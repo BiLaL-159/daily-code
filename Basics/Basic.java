@@ -5,8 +5,10 @@ import java.util.*;
 
 public class Basic {
     public static void main(String[] args) {
-        String up="abc";
-        System.out.println(permutationsWORepList("", up));
+       String up="4577";
+       ArrayList<String> ans= new ArrayList<>();
+        maxInKSwaps(up,0, ans, 2);
+        System.out.println(ans);
 
 
     }
@@ -275,4 +277,116 @@ public class Basic {
         return ans;
      }
 
+    public List<List<Integer>> subsets(int[] nums) {
+        ArrayList<Integer> list= new ArrayList<>();
+        return helper(nums, 0, list);
+    }
+
+    public List<List<Integer>> helper(int[] nums, int index, ArrayList<Integer> p) {
+        if (index == nums.length) {
+            List<List<Integer>> locallist = new ArrayList<>();
+            locallist.add(p);
+            return locallist;
+        }
+        List<List<Integer>> ans = new ArrayList<>();
+        int choice = nums[index];
+        List<List<Integer>> leftlist = helper(nums, index + 1, p);
+        p.add(choice);
+        List<List<Integer>> rightlist = helper(nums, index + 1, p);
+        ans.addAll(leftlist);
+        ans.addAll(rightlist);
+        return ans;
+    }
+
+    public static void uniquePermute(String p, String up){
+        if(up.length()==0){
+            System.out.println(p);
+            return;
+        }
+        HashSet<Character> set= new HashSet<>();
+        for(int i=0; i<up.length();i++){
+            char ch= up.charAt(i);
+            if(set.contains(ch)){
+                continue;
+            }
+            else{
+                set.add(ch);
+                uniquePermute(p+ch, up.substring(0,i)+up.substring(i+1));
+            }
+        }
+
+    }
+
+    public static void backtrackingPermute(String up, int index, ArrayList<String> list){
+        if(index==up.length()){
+            list.add(up);
+            return;
+        }
+        char ch= up.charAt(index);
+        HashSet<Character> set= new HashSet<>();
+        for(int i=index; i<up.length(); i++){
+           char toswap= up.charAt(i);
+            if(set.contains(toswap)){
+                continue;
+            }
+            else{
+                set.add(toswap);
+               String swapped= swap(up,  i ,  index);
+               backtrackingPermute(swapped,index+1,list);
+            }
+        }
+    }
+    public static String swap(String str, int i, int j) {
+        char[] charArray = str.toCharArray();
+        char temp = charArray[i];
+        charArray[i] = charArray[j];
+        charArray[j] = temp;
+        return new String(charArray);
+    }
+
+
+    public static String maxInKSwapsRecur(String up){
+       ArrayList<String> listOfAns= helperfun(up, "");
+        System.out.println(listOfAns);
+       int ans=0;
+        for(String element: listOfAns){
+            int val= Integer.parseInt(element);
+            ans= Math.max(ans, val);
+        }
+        return Integer.toString(ans);
+    }
+    public static ArrayList<String> helperfun(String up, String p){
+        if(up.length()==0){
+            ArrayList<String> locallist= new ArrayList<>();
+            locallist.add(p);
+            return locallist;
+        }
+        ArrayList<String> ans= new ArrayList<>();
+        for(int i=0; i<up.length(); i++){
+            char ch= up.charAt(i);
+            ans.addAll(helperfun(up.substring(0,i)+ up.substring(i+1),p+ch));
+        }
+        return ans;
+    }
+
+    public static void maxInKSwaps(String up, int index, ArrayList<String> ans, int k){
+        if(k==0 || index==up.length()){
+            ans.add(up);
+            return;
+        }
+        // condition --> from index+1 to length
+        // find the greatest val
+        // for every i from index+1 to length,  if i>index && i==max
+        // call recursion, else not
+        for(int i=index+1; i<up.length(); i++){
+            if((Integer.parseInt(up.substring(i, i + 1)) < Integer.parseInt(up.substring(index,index+1)))){
+                continue;
+            }
+            else{
+                String swapped= swap(up, i, index);
+                maxInKSwaps(swapped, index+1, ans, k-1);
+            }
+
+        }
+    }
 }
