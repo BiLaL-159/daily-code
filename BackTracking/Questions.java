@@ -127,15 +127,15 @@ public class Questions {
        for(int i=0; i<n; i++){
            list.add(i+1);
        }
-       return solveFindTheWinner(n, k, list,0);
+       return solveFindTheWinner(k, list,0);
     }
-    public static int solveFindTheWinner(int n,int k, ArrayList<Integer> list, int i){
+    public static int solveFindTheWinner(int k, ArrayList<Integer> list, int i){
        if(list.size()==1){
            return list.getFirst();
        }
        i=(i+k-1)%(list.size());
        list.remove(i);
-      return solveFindTheWinner(n,k,list,i);
+      return solveFindTheWinner(k,list,i);
     }
 
 }

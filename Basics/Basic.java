@@ -5,10 +5,10 @@ import java.util.*;
 
 public class Basic {
     public static void main(String[] args) {
-       String up="4577";
-       ArrayList<String> ans= new ArrayList<>();
-        maxInKSwaps(up,0, ans, 2);
-        System.out.println(ans);
+       char a='2';
+       int b=3;
+        boolean istrue= b<a;
+        System.out.println(istrue);
 
 
     }
@@ -368,25 +368,39 @@ public class Basic {
         }
         return ans;
     }
-
-    public static void maxInKSwaps(String up, int index, ArrayList<String> ans, int k){
-        if(k==0 || index==up.length()){
-            ans.add(up);
-            return;
-        }
-        // condition --> from index+1 to length
-        // find the greatest val
-        // for every i from index+1 to length,  if i>index && i==max
-        // call recursion, else not
-        for(int i=index+1; i<up.length(); i++){
-            if((Integer.parseInt(up.substring(i, i + 1)) < Integer.parseInt(up.substring(index,index+1)))){
-                continue;
-            }
-            else{
-                String swapped= swap(up, i, index);
-                maxInKSwaps(swapped, index+1, ans, k-1);
+    public static void maxInKSwapsHere(String up, int k, int index, ArrayList<String> list) {
+            if (k == 0 || index == up.length() - 1) {
+                list.add(up);
+                return;
             }
 
+            char maxChar = up.charAt(index);
+            for (int i = index + 1; i < up.length(); i++) {
+                if (up.charAt(i) > maxChar) {
+                    maxChar = up.charAt(i);
+                }
+            }
+
+            if (up.charAt(index) != maxChar) {
+                for (int i = index + 1; i < up.length(); i++) {
+                    if (up.charAt(i) == maxChar) {
+                        String newUp = swap(up, i, index);
+                        maxInKSwapsHere(newUp, k - 1, index + 1, list);
+                    }
+                }
+            } else {
+                maxInKSwapsHere(up, k, index + 1, list);
+            }
         }
+
+        public static void NDigitInc(String p, int n, int index, ArrayList<String> list){
+         if(index==n){
+
+            }
+        }
+
+
+
+
     }
-}
+
