@@ -4,15 +4,8 @@ import java.util.Locale;
 
 public class Questions {
     public static void main(String[] args) {
-       print1ToN(1,10);
-        System.out.println(factorial(5));
-        ArrayList<Integer> list= new ArrayList<>();
-        list.add(0);
-        list.add(3);
-        list.add(1);
-        list.add(5);
-        list.add(2);
-        System.out.println(sortUsingRecursion(list));
+       String str="bilal";
+        System.out.println(reverseString(str));
     }
 
     public static void print1ToN(int current,int n){
@@ -92,6 +85,12 @@ public class Questions {
 
         }
         return ans;
+    }
+    public static String reverseString(String str) {
+        if (str.isEmpty()) {
+            return str;
+        }
+        return  reverseString(str.substring(1)) + str.charAt(0);
     }
 
 
