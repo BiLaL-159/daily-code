@@ -25,11 +25,12 @@ public class Fibonacci {
     }
 
     public static int solvefiboMemo(int n){
-        if(t[n]!=-1){
-            return t[n];
-        }
         if(n<=1){
             return t[n]=n;
+        }
+
+        if(t[n]!=-1){
+            return t[n];
         }
         return t[n]=solvefiboMemo(n-1)+solvefiboMemo(n-2);
     }
@@ -45,6 +46,18 @@ public class Fibonacci {
 
         return dp[n];
     }
+
+    public static int fiboDPOpti(int n){
+        int prev1=0;
+        int prev2=1;
+        for(int i=2; i<n+1; i++){
+          int curri= prev1+prev2;
+          prev2=prev1;
+          prev1=curri;
+        }
+        return prev1;
+    }
+
 
 
 
